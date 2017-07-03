@@ -1,0 +1,18 @@
+total 80
+-rw-r--r--+ 1 Gary None    0 Mar 21 13:27 list.txt
+----------+ 1 Gary None 4247 Feb  8 22:12 rockets1  1  1  1.gif
+----------+ 1 Gary None 3886 Feb  8 22:12 rockets1  1  1  2.gif
+----------+ 1 Gary None 4559 Feb  8 22:12 rockets1  1  2  1.gif
+----------+ 1 Gary None 4190 Feb  8 22:12 rockets1  1  2  2.gif
+----------+ 1 Gary None 3732 Feb  8 22:12 rockets1  2  1  1.gif
+----------+ 1 Gary None 3374 Feb  8 22:12 rockets1  2  1  2.gif
+----------+ 1 Gary None 4083 Feb  8 22:12 rockets1  2  2  1.gif
+----------+ 1 Gary None 3716 Feb  8 22:12 rockets1  2  2  2.gif
+----------+ 1 Gary None 3943 Feb  8 22:12 rockets2  1  1  1.gif
+----------+ 1 Gary None 3574 Feb  8 22:12 rockets2  1  1  2.gif
+----------+ 1 Gary None 4202 Feb  8 22:12 rockets2  1  2  1.gif
+----------+ 1 Gary None 3831 Feb  8 22:12 rockets2  1  2  2.gif
+----------+ 1 Gary None 3418 Feb  8 22:12 rockets2  2  1  1.gif
+----------+ 1 Gary None 3035 Feb  8 22:12 rockets2  2  1  2.gif
+----------+ 1 Gary None 3726 Feb  8 22:12 rockets2  2  2  1.gif
+----------+ 1 Gary None 3355 Feb  8 22:12 rockets2  2  2  2.gif
