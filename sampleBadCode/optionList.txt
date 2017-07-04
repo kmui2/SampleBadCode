@@ -1,0 +1,65 @@
+{
+    '1': {
+        'name': 'subjCode',
+        'prompt': 'Subject Code: ',
+        'options': 'any',
+        'default': 'arocket_101',
+        'type': str
+    },
+    '2': {
+        'name': 'gender',
+        'prompt': 'Subject Gender m/f: ',
+        'options': ("m", "f"),
+        'default': '',
+        'type': str
+    },
+    '3': {
+        'name': 'responseDevice',
+        'prompt': 'Response device: keyboard/gamepad: ',
+        'options': ("keyboard", "gamepad"),
+        'default': 'gamepad',
+        'type': str
+    },
+    '4': {
+        'name': 'mapping',
+        'prompt': 'Label mapping G1/G2/A1/A2: ',
+        'options': ('G1', 'G2', 'A1', 'A2'),
+        'default': '',
+        'type': str
+    },
+    '5': {
+        'name': 'locationMapping',
+        'prompt': 'Location mapping GL/GR/AL/AR/R/V: ',
+        'options': ('GL', 'GR', 'AL', 'AR', 'R', 'V'),
+        'default': '',
+        'type': str
+    },
+    '6': {
+        'name': 'categoryStructure',
+        'prompt': 'Category Structure - 5-4 / CC: ',
+        'options': ('5-4', 'CC'),
+        'default': 'CC',
+        'type': str
+    },
+    '7': {
+        'name': 'order',
+        'prompt': 'First or second? 1/2: ',
+        'options': ("1", "2"),
+        'default': '1',
+        'type': str
+    },
+    '8': {
+        'name': 'seed',
+        'prompt': 'Enter seed: ',
+        'options': 'any',
+        'default': 100,
+        'type': int
+    },
+    '9': {
+        'name': 'expInitials',
+        'prompt': 'Experiment Initials: ',
+        'options': 'any',
+        'default': '',
+        'type': str
+    }
+}
