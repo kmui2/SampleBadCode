@@ -265,26 +265,20 @@ class ExpPresentation():
         self.experiment.win.flip()
 
         if self.experiment.subjVariables['categoryStructure'] == "5-4":
-            strategy1 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryD1']),
-            strategy2 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryD2']),
-            strategy3 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategorySim']),
+            strategy1 = int(sideToLabelMap[resp] == curTrial['correctCategoryD1']),
+            strategy2 = int(sideToLabelMap[resp] == curTrial['correctCategoryD2']),
+            strategy3 = int(sideToLabelMap[resp] == curTrial['correctCategorySim']),
             strategy4 = '*'
         else:
-            strategy1 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryCC']),
-            strategy2 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryR1']),
-            strategy3 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryR2']),
-            strategy4 = int(sideToLabelMap[resp]
-                            == curTrial['correctCategoryKP']),
+            strategy1 = int(sideToLabelMap[resp] == curTrial['correctCategoryCC']),
+            strategy2 = int(sideToLabelMap[resp] == curTrial['correctCategoryR1']),
+            strategy3 = int(sideToLabelMap[resp] == curTrial['correctCategoryR2']),
+            strategy4 = int(sideToLabelMap[resp] == curTrial['correctCategoryKP']),
 
         fieldVars = []
         for curField in self.fieldNames:
             fieldVars.append(curTrial[curField])
+        
         curLine = createResp(self.experiment.optionList, self.experiment.subjVariables, fieldVars,
                              a_whichPart=whichPart,
                              b_trialIndex=trialIndex,
@@ -295,7 +289,8 @@ class ExpPresentation():
                              h_s3=strategy3,
                              i_s4=strategy4,
                              k_isRight=isRight,
-                             l_rt=rt * 1000)
+                             l_rt=rt * 1000
+        )
         writeToFile(self.experiment.outputFile, curLine)
 
     def cycleThroughExperimentTrials(self, whichPart):
@@ -304,22 +299,19 @@ class ExpPresentation():
         if whichPart == "practice":
             numTrials = self.experiment.numPracticeTrials
             numBlocks = 1
-            trialIndices = random.sample(
-                range(1, 30), self.experiment.numPracticeTrials)
+            trialIndices = random.sample(range(1, 30), self.experiment.numPracticeTrials)
             for curPracticeTrialIndex in trialIndices:
-                curTrial = self.trialListMatrix.getFutureTrial(
-                    curPracticeTrialIndex)
+                curTrial = self.trialListMatrix.getFutureTrial(curPracticeTrialIndex)
                 self.presentExperimentTrial(0, whichPart, curTrial)
         elif whichPart == "real":
             curTrialIndex = 0
             prevBlock = 'none'
             for curTrial in self.trialListMatrix:
-                    # take break every X trials (for blocks that have lots of trials; otherwise can set it to break every X blocks)
+                # take break every X trials (for blocks that have lots of trials; otherwise can set it to break every X blocks)
                 if curTrialIndex > 0 and curTrialIndex % self.experiment.takeBreakEveryXTrials == 0:
-                    showText(self.experiment.win, self.experiment.takeBreak, color=(
-                        0, 0, 0), inputDevice=self.experiment.inputDevice)  # take a break
+                    showText(self.experiment.win, self.experiment.takeBreak, color=(0, 0, 0), inputDevice=self.experiment.inputDevice)  # take a break
 
-                """This is what's shown on every trial"""
+                # This is what's shown on every trial
                 self.presentExperimentTrial(curTrialIndex, whichPart, curTrial)
 
                 curTrialIndex += 1
@@ -328,14 +320,10 @@ class ExpPresentation():
 currentExp = Exp()
 currentPresentation = ExpPresentation(currentExp)
 currentPresentation.initializeExperiment()
-showText(currentExp.win, currentExp.instructions,
-         color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
-showText(currentExp.win, currentExp.practiceTrials,
-         color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
+showText(currentExp.win, currentExp.instructions, color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
+showText(currentExp.win, currentExp.practiceTrials,color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
 currentPresentation.cycleThroughExperimentTrials("practice")
-showText(currentExp.win, currentExp.realTrials, color=(
-    0, 0, 0), inputDevice=currentExp.inputDevice)
+showText(currentExp.win, currentExp.realTrials, color=(0, 0, 0), inputDevice=currentExp.inputDevice)
 currentPresentation.cycleThroughExperimentTrials("real")
-showText(currentExp.win, currentExp.finalText, color=(0, 0, 0),
-         inputDevice=currentExp.inputDevice)  # thank the subject
+showText(currentExp.win, currentExp.finalText, color=(0, 0, 0),inputDevice=currentExp.inputDevice)  # thank the subject
 web.open(currentExp.surveyURL)
