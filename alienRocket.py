@@ -71,8 +71,8 @@ class Exp:
             self.inputDevice = "keyboard"
             self.validResponses = {'z': 'left', 'slash': 'right'}
             self.validResponsesVerification = {'z': 'Yes', 'slash': 'No'}
-            responseInfo = """ You will use the keyboard keys to respond (z for left and / for right. P
-            lace your right index finger on the / key and your left middle finger on the z key."""
+            responseInfo = """ You will use the keyboard keys to respond (z for left and / for right. 
+            Place your right index finger on the / key and your left middle finger on the z key."""
 
         self.win = visual.Window(fullscr=True, pos=[
                                  0, 0], color="white", allowGUI=False, monitor='testingRoom', units='pix', winType='pyglet')
