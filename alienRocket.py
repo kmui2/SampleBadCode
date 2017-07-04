@@ -16,39 +16,38 @@ from stimPresPsychoPy import *
 
 class Exp:
     def __init__(self):
-    	self.optionList = optionList
 
         optionsReceived = False
-        fileOpened = False
-        while not optionsReceived or not fileOpened:
-            [optionsReceived, self.subjVariables] = enterSubjInfo(
-                'same-gekTalp-noDelay-question-HTEST', self.optionList)  # alienRockets_noDelay_AB
+        fileOpened = False        
+        while not fileOpened:
+            [optionsReceived, self.subjVariables] = enterSubjInfo('same-gekTalp-noDelay-question-HTEST', optionList) 
             if not optionsReceived:
                 popupError(self.subjVariables)
-            try:
-                if os.path.isfile(self.subjVariables['subjCode'] + '_test.txt'):
-                    fileOpened = False
+            elif os.path.isfile(self.subjVariables['subjCode'] + '_test.txt'):
                     popupError('Error: That subject code already exists')
-                else:
-                    self.outputFile = open(
-                        self.subjVariables['subjCode'] + '_test.txt', 'w')
-                    fileOpened = True
-            except:
-                pass
-            print 'options received: ', optionsReceived, self.subjVariables
+            else:
+                self.outputFile = open(self.subjVariables['subjCode'] + '_test.txt', 'w')
+                fileOpened = True
+            # print 'options received: ', optionsReceived, self.subjVariables
 
-        if self.subjVariables['locationMapping'] != 'V':
-            if generateTrials(self.subjVariables['subjCode'], self.subjVariables['seed'], self.subjVariables['mapping'], self.subjVariables['locationMapping'], self.subjVariables['categoryStructure']):
-                print "Trials generated"
-            else:
-                print "Trials not generated - error"
-                core.quit()
+        if (
+        self.subjVariables['locationMapping'] != 'V' and generateTrials(
+            self.subjVariables['subjCode'], 
+            self.subjVariables['seed'], 
+            self.subjVariables['mapping'], 
+            self.subjVariables['locationMapping'], 
+            self.subjVariables['categoryStructure']
+        )
+        ) or generateTrialsVerification(
+            self.subjVariables['subjCode'], 
+            self.subjVariables['seed'], 
+            self.subjVariables['mapping'], 
+            self.subjVariables['locationMapping']
+        ):
+             print "Trials generated"
         else:
-            if generateTrialsVerification(self.subjVariables['subjCode'], self.subjVariables['seed'], self.subjVariables['mapping'], self.subjVariables['locationMapping']):
-                print "Trials generated"
-            else:
-                print "Trials not generated - error"
-                core.quit()
+            print "Trials not generated - error"
+            core.quit()
 
         if self.subjVariables['responseDevice'] == 'gamepad':
             try:
