@@ -7,6 +7,7 @@ import time
 import webbrowser as web
 import json
 from optionList import optionList
+import pygame
 
 from baseDefsPsychoPy import *
 from generateTrials import *
@@ -16,43 +17,43 @@ from stimPresPsychoPy import *
 
 class Exp:
     def __init__(self):
+    	self.optionList = optionList
 
         optionsReceived = False
-        fileOpened = False        
-        while not fileOpened:
-            [optionsReceived, self.subjVariables] = enterSubjInfo('same-gekTalp-noDelay-question-HTEST', optionList) 
+        fileOpened = False        while not optionsReceived or not fileOpened:
+            [optionsReceived, self.subjVariables] = enterSubjInfo(
+                'same-gekTalp-noDelay-question-HTEST', self.optionList)  # alienRockets_noDelay_AB
             if not optionsReceived:
                 popupError(self.subjVariables)
-            elif os.path.isfile(self.subjVariables['subjCode'] + '_test.txt'):
+            try:
+                if os.path.isfile(self.subjVariables['subjCode'] + '_test.txt'):
+                    fileOpened = False
                     popupError('Error: That subject code already exists')
-            else:
-                self.outputFile = open(self.subjVariables['subjCode'] + '_test.txt', 'w')
-                fileOpened = True
-            # print 'options received: ', optionsReceived, self.subjVariables
+                else:
+                    self.outputFile = open(
+                        self.subjVariables['subjCode'] + '_test.txt', 'w')
+                    fileOpened = True
+            except:
+                pass
+            print 'options received: ', optionsReceived, self.subjVariables
 
-        if (
-        self.subjVariables['locationMapping'] != 'V' and generateTrials(
-            self.subjVariables['subjCode'], 
-            self.subjVariables['seed'], 
-            self.subjVariables['mapping'], 
-            self.subjVariables['locationMapping'], 
-            self.subjVariables['categoryStructure']
-        )
-        ) or generateTrialsVerification(
-            self.subjVariables['subjCode'], 
-            self.subjVariables['seed'], 
-            self.subjVariables['mapping'], 
-            self.subjVariables['locationMapping']
-        ):
-             print "Trials generated"
+        if self.subjVariables['locationMapping'] != 'V':
+            if generateTrials(self.subjVariables['subjCode'], self.subjVariables['seed'], self.subjVariables['mapping'], self.subjVariables['locationMapping'], self.subjVariables['categoryStructure']):
+                print "Trials generated"
+            else:
+                print "Trials not generated - error"
+                core.quit()
         else:
-            print "Trials not generated - error"
-            core.quit()
+            if generateTrialsVerification(self.subjVariables['subjCode'], self.subjVariables['seed'], self.subjVariables['mapping'], self.subjVariables['locationMapping']):
+                print "Trials generated"
+            else:
+                print "Trials not generated - error"
+                core.quit()
 
         if self.subjVariables['responseDevice'] == 'gamepad':
             try:
                 self.stick = initGamepad()
-                pygame.init()  #pygame imported in stimPresPsychoPy
+                pygame.init()
                 self.validResponses = {7: 'right', 6: 'left'}
                 self.validResponsesVerification = {7: 'No', 6: 'Yes'}
                 self.inputDevice = "gamepad"
@@ -63,16 +64,14 @@ class Exp:
                 self.inputDevice = "keyboard"
                 self.validResponses = {'z': 'left', 'slash': 'right'}
                 self.validResponsesVerification = {'z': 'Yes', 'slash': 'No'}
-                responseInfo = """ You will use the keyboard keys to respond (z for left and / for right. 
-                Place your right index finger on the / key and your left middle finger on the z key."""
+                responseInfo = " You will use the keyboard keys to respond (z for left and / for right. Place your right index finger on the / key and your left middle finger on the z key."
 
         else:
             print "Using keyboard"
             self.inputDevice = "keyboard"
             self.validResponses = {'z': 'left', 'slash': 'right'}
             self.validResponsesVerification = {'z': 'Yes', 'slash': 'No'}
-            responseInfo = """ You will use the keyboard keys to respond (z for left and / for right. P
-            lace your right index finger on the / key and your left middle finger on the z key."""
+            responseInfo = " You will use the keyboard keys to respond (z for left and / for right. Place your right index finger on the / key and your left middle finger on the z key."
 
         self.win = visual.Window(fullscr=True, pos=[
                                  0, 0], color="white", allowGUI=False, monitor='testingRoom', units='pix', winType='pyglet')
@@ -93,89 +92,29 @@ class Exp:
         self.numPracticeTrials = 5
         self.takeBreakEveryXTrials = 70
 
-
-
         self.instructionsGekTalp = \
-"""
-In this task you will see schematic pictures of various rockets.
-There are two types of rockets - gek rockets, and talp rockets. Your goal
-is to figure out which ones are which. On each trial of this experiment you will
-see a picture of one of the rockets and then the two options (gek and talp) will appear
-to the left and right of the picture. You should respond with the appropriate (left or right)
-key to choose the kind of rocket you think it is. After you make a choice you will
-hear a buzzing sound if you made a mistake, and a bleeping sound if you responded
-correctly. In the beginning you will just be guessing, but you'll soon find yourself
-improving. Note that on some trials there won't be any feedback (buzz or bleep) sounds.
-This is normal.
-""".replace('\n',' ')+ "\n\n"+ \
-"""
-Try to do your best, and don't spend too much time on any one trial. Please let the
-experimenter know if you have any questions. We'll start with some practice trials.
-""".replace('\n',' ')+ "\n\n"
-
-
+            """In this task you will see schematic pictures of various rockets.  There are two types of rockets - gek rockets, and talp rockets. Your goal is to figure out which ones are which. On each trial of this experiment you will see a picture of one of the rockets and then the two options (gek and talp) will appear to the left and right of the picture. You should respond with the appropriate (left or right) key to choose the kind of rocket you think it is. After you make a choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if you responded correctly. In the beginning you will just be guessing, but you'll soon find yourself improving. Note that on some trials there won't be any feedback (buzz or bleep) sounds. This is normal.
+		
+		Try to do your best, and don't spend too much time on any one trial. Please let the experimenter know if you have any questions. We'll start with some practice trials.
+		\n\n"""
 
         self.instructionsGekTalpHypothesis = \
-"""
-In this task you will see schematic pictures of various rockets.  There are
-two types of rockets: gek rockets, and talp rockets. Your goal is to figure out
-which ones are which by testing hypotheses. On each trial of this experiment you
-will see a picture of one of the rockets and then the two options (gek and talp)
-will appear to the left and right of the picture. You should respond with the
-appropriate (left or right) key to choose the kind of rocket you think it is.
-After you make a choice you will hear a buzzing sound if you made a mistake,
-and a bleeping sound if you responded correctly. In the beginning you will just
-be guessing, but you'll soon find yourself improving. On each trial you should
-ask yourself questions like "is it the shape of the wings? Is it the shape
-of the tail? YOU WILL NEED TO CONSIDER MORE THAN ONE FEATURE AT A TIME". 
-Note that on some trials there won't be any feedback (buzz or bleep) sounds.
-This is normal
-""".replace('\n',' ')+ "\n\n" + \
-"""
-Try to do your best, and don't spend too much time on any one trial. Please let the
-experimenter know if you have any questions. We'll start with some practice trials
-""".replace('\n',' ')+ "\n\n"
-
-
+            """In this task you will see schematic pictures of various rockets.  There are two types of rockets: gek rockets, and talp rockets. Your goal is to figure out which ones are which by testing hypotheses. On each trial of this experiment you will see a picture of one of the rockets and then the two options (gek and talp) will appear to the left and right of the picture. You should respond with the appropriate (left or right) key to choose the kind of rocket you think it is. After you make a choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if you responded correctly. In the beginning you will just be guessing, but you'll soon find yourself improving. On each trial you should ask yourself questions like "is it the shape of the wings? Is it the shape of the tail? YOU WILL NEED TO CONSIDER MORE THAN ONE FEATURE AT A TIME".  Note that on some trials there won't be any feedback (buzz or bleep) sounds. This is normal.
+		
+		Try to do your best, and don't spend too much time on any one trial. Please let the experimenter know if you have any questions. We'll start with some practice trials.
+		\n\n"""
 
         self.instructionsGekTalpVerify = \
-"""
-In this task you will see schematic pictures of various rockets.  There are
-two types of rockets - gek rockets, and talp rockets. Your goal is to figure
-out which ones are which. On each trial of this experiment you will see a picture
-of one of the rockets and a prompt 'Is this a gek rocket' or 'Is this a talp
-rocket'. You should respond 'Yes' or 'No' depending on what you think the
-answer is. Press the left key to respond 'Yes' and the right key to respond
-'No'. The experimenter will let you know which specific buttons to use. After
-you make a choice you will hear a buzzing sound if you made a mistake, and a
-bleeping sound if you responded correctly. In the beginning you will just be
-guessing, but you'll soon find yourself improving. **Note that on some trials
-there won't be any feedback (buzz or bleep) sounds. This is normal.**
-""".replace('\n',' ')+ "\n\n" + \
-"""
-Try to do your best, and don't spend too much time on any one trial. Please let
-the experimenter know if you have any questions. We'll start with some practice trials
-""".replace('\n',' ')+ "\n\n"
-
-
+            """In this task you will see schematic pictures of various rockets.  There are two types of rockets - gek rockets, and talp rockets. Your goal is to figure out which ones are which. On each trial of this experiment you will see a picture of one of the rockets and a prompt 'Is this a gek rocket' or 'Is this a talp rocket'. You should respond 'Yes' or 'No' depending on what you think the answer is. Press the left key to respond 'Yes' and the right key to respond 'No. The experimenter will let you know which specific buttons to use. After you make a choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if you responded correctly. In the beginning you will just be guessing, but you'll soon find yourself improving. **Note that on some trials there won't be any feedback (buzz or bleep) sounds. This is normal.**
+		
+		Try to do your best, and don't spend too much time on any one trial. Please let the experimenter know if you have any questions. We'll start with some practice trials.
+		\n\n"""
 
         self.instructionsTypeAB = \
-"""
-In this task you will see schematic pictures of various rockets.  There are
-two types of rockets - gek rockets, and talp rockets. Your goal is to figure out
-which ones are which. On each trial of this experiment you will see a picture of
-one of the rockets and then the two options (Type A and Type B) will appear to
-the left and right of the picture. You should respond with the appropriate (left or right)
-key to choose the kind of rocket you think it is (Type A or Type B). After you make a
-choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if
-you responded correctly. In the beginning you will just be guessing, but you'll soon
-find yourself improving. *Note that on some trials there won't be any feedback
-(buzz or bleep) sounds. This is normal.*
-""".replace('\n',' ')+ "\n\n" + \
-"""
-Try to do your best, and don't spend too much time on any one trial. Please let the
-experimenter know if you have any questions. We'll start with some practice trials
-""".replace('\n',' ')+ "\n\n"
+            """In this task you will see schematic pictures of various rockets.  There are two types of rockets - gek rockets, and talp rockets. Your goal is to figure out which ones are which. On each trial of this experiment you will see a picture of one of the rockets and then the two options (Type A and Type B) will appear to the left and right of the picture. You should respond with the appropriate (left or right) key to choose the kind of rocket you think it is (Type A or Type B). After you make a choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if you responded correctly. In the beginning you will just be guessing, but you'll soon find yourself improving. *Note that on some trials there won't be any feedback (buzz or bleep) sounds. This is normal.*
+		
+		Try to do your best, and don't spend too much time on any one trial. Please let the experimenter know if you have any questions. We'll start with some practice trials.
+		\n\n"""
 
         self.instructionsGekTalp += responseInfo
         self.instructionsTypeAB += responseInfo
@@ -190,8 +129,7 @@ experimenter know if you have any questions. We'll start with some practice tria
             self.instructions = self.instructionsGekTalpHypothesis
 
         self.takeBreak = "Please take a short break.\nPress a key when you are ready to continue."
-        self.finalText = """Thank you for participating. We will now ask you some questions about the task. 
-        Press enter. A web page should come up. If it doesn't, please alert the experimenter""".replace('\n',' ').replace('\t',' ')
+        self.finalText = "Thank you for participating. We will now ask you some questions about the task. Press enter. A web page should come up. If it doesn't, please alert the experimenter"
 
         self.practiceTrials = "The next part is practice"
         self.realTrials = "Now for the real trials."
