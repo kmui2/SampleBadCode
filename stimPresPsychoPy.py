@@ -74,7 +74,7 @@ def	calculateRectangularCoordinates(distanceX, distanceY, numCols, numRows,yOffs
 	
 	
 def setAndPresentStimulus(win,stimuli,duration=0):
-	"""Stimuli can be a list or a single draw-able stimulus"""
+	# Stimuli can be a list or a single draw-able stimulus
 	if type(stimuli).__name__=="list":
 		for curStim in stimuli:
 			curStim.draw()
@@ -88,7 +88,7 @@ def setAndPresentStimulus(win,stimuli,duration=0):
 	return
 
 def setPresentAndWaitForEnter(win,stimuli,inputDevice='keyboard'):
-	"""Stimuli can be a list or a single draw-able stimulus"""
+	# Stimuli can be a list or a single draw-able stimulus
 	if type(stimuli).__name__=="list":
 		for curStim in stimuli:
 			curStim.draw()
@@ -129,7 +129,7 @@ def newRect(win,size=[0,0],pos=[0,0],color="gray"):
 	return visual.PatchStim(win,tex ='None', texRes=1024,mask='None',color=color,size=size,pos=pos)
 
 def playAndWait(sound,soundPath='',winSound=False,waitFor=-1):
-	"""Sound (other than winSound) runs on a separate thread. Waitfor controls how long to pause before resuming. -1 for length of sound"""
+	# Sound (other than winSound) runs on a separate thread. Waitfor controls how long to pause before resuming. -1 for length of sound
 	if not winSoundLoaded:
 		winSound=False
 	if prefs.general['audioLib'] == ['pygame']:
