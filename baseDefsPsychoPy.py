@@ -134,8 +134,8 @@ def setupSubjectVariables():
 	parser = OptionParser()
 	parser.add_option("-s", "--subject-id", dest="subjid", help="specify the subject id")
 
-	(options, args)		 = parser.parse_args()
-	self.subjID			 = options.subjid
+	(options, args) = parser.parse_args()
+	self.subjID = options.subjid
 
 	if not self.subjID:
 		print "You must provide a Subject ID"
