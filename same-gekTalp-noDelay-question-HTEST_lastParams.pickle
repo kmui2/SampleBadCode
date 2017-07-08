@@ -9,7 +9,7 @@ VGL
 p5
 sS'subjCode'
 p6
-Varocket_test4
+Varocket_test5
 p7
 sS'gender'
 p8
@@ -24,7 +24,7 @@ S'same-gekTalp-noDelay-question-HTEST'
 p12
 sS'dateStr'
 p13
-V2017_Jul_04_0020
+V2017_Jul_07_2145
 p14
 sS'responseDevice'
 p15
@@ -32,7 +32,7 @@ Vkeyboard
 p16
 sS'seed'
 p17
-I100
+L100L
 sS'order'
 p18
 S'1'
