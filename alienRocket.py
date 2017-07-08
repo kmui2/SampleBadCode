@@ -215,11 +215,13 @@ class ExpPresentation():
         showText(self.experiment.win, "Loading Images...", color="gray", waitForKey=False)
 
         print 'SOUND PREFS: ', prefs.general['audioLib'], prefs.general['audioLib'][0], prefs.general['audioLib'][0] == "pygame"
+
         if prefs.general['audioLib'] == ['pygame'] or prefs.general['audioLib'][0] == 'pygame':
             print 'loading winsounds'
             self.soundMatrix = loadFiles('stimuli', ['wav'], 'winSound')
         else:
             self.soundMatrix = loadFiles('stimuli', ['wav'], 'sound')
+        
         #self.soundMatrix = loadFiles('stimuli','wav','pyo')
         self.pictureMatrix = loadFiles(
             'stimuli', ['gif', 'png'], 'image', self.experiment.win)
@@ -235,6 +237,7 @@ class ExpPresentation():
             labelLeft = newText(self.experiment.win, text=curTrial['labelLeft'], pos=self.locations['left'], color="black", scale=2.0)
             labelRight = newText(self.experiment.win, text=curTrial['labelRight'], pos=self.locations['right'], color="black", scale=2.0)
             sideToLabelMap = {'left': curTrial['labelLeft'], 'right': curTrial['labelRight']}
+        
         yes = newText(self.experiment.win, text='Yes',pos=self.locations['left'], color="black", scale=1.0)
         no = newText(self.experiment.win, text='No',pos=self.locations['right'], color="black", scale=1.0)
 
@@ -242,6 +245,7 @@ class ExpPresentation():
         core.wait(self.experiment.ITI)
         self.pictureMatrix[curTrial['stim']][0].setPos([0, 0])
         setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0]], self.experiment.preLabelDelay)
+
         if self.experiment.subjVariables['locationMapping'] == 'V':
             setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0], prompt, yes, no])
         else:
@@ -249,6 +253,7 @@ class ExpPresentation():
 
         if self.experiment.inputDevice == 'keyboard':
             (resp, rt) = getKeyboardResponse(self.experiment.validResponses.keys())
+        
         elif self.experiment.inputDevice == 'gamepad':
             (resp, rt) = getGamepadResponse(self.experiment.stick, self.experiment.validResponses.keys())
         resp = self.experiment.validResponses[resp]
@@ -261,6 +266,7 @@ class ExpPresentation():
                 playAndWait(self.soundMatrix['bleep'])
             else:
                 playAndWait(self.soundMatrix['buzz'])
+        
         core.wait(self.experiment.postResponseDelay)
         self.experiment.win.flip()
 
@@ -303,6 +309,7 @@ class ExpPresentation():
             for curPracticeTrialIndex in trialIndices:
                 curTrial = self.trialListMatrix.getFutureTrial(curPracticeTrialIndex)
                 self.presentExperimentTrial(0, whichPart, curTrial)
+        
         elif whichPart == "real":
             curTrialIndex = 0
             prevBlock = 'none'
