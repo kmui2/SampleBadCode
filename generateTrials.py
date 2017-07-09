@@ -29,7 +29,8 @@ stimuli = {
     'rockets  2  2  1  1': ['t', 211],
     'rockets  2  2  1  2': ['t', 212],
     'rockets  2  2  2  1': ['o', 222],
-    'rockets  2  2  2  2': ['o', 222]}
+    'rockets  2  2  2  2': ['o', 222]
+}
 
 stimuliCC = {
     'rockets  1  1  1  1': ['o', 1111],
@@ -47,14 +48,23 @@ stimuliCC = {
     'rockets  2  2  1  1': ['t', 1221],
     'rockets  2  2  1  2': ['o', 2222],
     'rockets  2  2  2  1': ['o', 2222],
-    'rockets  2  2  2  2': ['t', 1222]}
+    'rockets  2  2  2  2': ['t', 1222]
+}
 
 
 locations = ['left', 'right']
-mapping = {'G1': {'1': 'gek', '2': 'talp'}, 'G2': {'1': 'talp', '2': 'gek'}, 'A1': {
-    '1': 'Type A', '2': 'Type B'}, 'A2': {'1': 'Type B', '2': 'Type A'}}
-labelOrderMapping = {'GL': ['gek', 'talp'], 'GR': ['talp', 'gek'], 'AL': [
-    'Type A', 'Type B'], 'AR': ['Type B', 'Type A']}
+mapping = {
+    'G1': {'1': 'gek', '2': 'talp'}, 
+    'G2': {'1': 'talp', '2': 'gek'}, 
+    'A1': {'1': 'Type A', '2': 'Type B'}, 
+    'A2': {'1': 'Type B', '2': 'Type A'}
+}
+labelOrderMapping = {
+    'GL': ['gek', 'talp'], 
+    'GR': ['talp', 'gek'], 
+    'AL': ['Type A', 'Type B'], 
+    'AR': ['Type B', 'Type A']
+}
 
 separator = ","
 
