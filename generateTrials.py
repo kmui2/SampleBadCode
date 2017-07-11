@@ -72,19 +72,21 @@ separator = ","
 
 def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
     if categoryStructure == '5-4':
-        stimuliOriginal = [stims for stims in stimuli.items() if stims[1][0] == 'o']
-        stimuliTransfer = [stims for stims in stimuli.items() if stims[1][0] == 't']
-        correctCategorys = [[stims, str(stims[1][1])[0]] for stims in stimuli.items() if stims[1][0] == 'o']
+        items = stimuli.items()
     else:
-        stimuliOriginal = [stims for stims in stimuliCC.items() if stims[1][0] == 'o']
-        stimuliTransfer = [stims for stims in stimuliCC.items() if stims[1][0] == 't']
-        correctCategorys = [[stims, str(stims[1][1])[0]] for stims in stimuliCC.items() if stims[1][0] == 'o']
+        items = stimuliCC.items()
+    
+    stimuliOriginal = [stims for stims in items if stims[1][0] == 'o']
+    stimuliTransfer = [stims for stims in items if stims[1][0] == 't']
+    correctCategorys = [[stims, str(stims[1][1])[0]] for stims in items if stims[1][0] == 'o']
+    
     try:
         # open trial list file for writing
         trialListFile = open(subjCode + '_trialList.csv', 'w')
     except IOError:
         print "Couldn't open trial list file for writing for some reason. Weird."
         return False
+
     if labelOrder == 'R':
         labelOrderMappingCircularList = circularList(
             labelOrderMapping.keys(), seed + 1)
