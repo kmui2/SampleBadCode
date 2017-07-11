@@ -1,4 +1,13 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.formatting.provider": "autopep8"
+    "python.formatting.provider": "autopep8",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/._*.py": true,
+        "**/*.pyc": true,
+    }
 }

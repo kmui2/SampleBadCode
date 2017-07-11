@@ -11,35 +11,31 @@ import time
 import hashlib
 import subprocess
 import math
+from scipy import ndimage
 
+# attempting import winsound
 try:
     import winsound
 except ImportError:
     print "Warning: winsound not found; will try using pyo/pyaudio"
+
+# attempting import pyo
 try:
     import pyo
     print "Attempting to use pyo for sounds"
     prefs.general['audioLib'] = ['pyo']
-except:
-    print 'could not load pyo'
-
-
-if prefs.general['audioLib'][0] == 'pyo':
     print 'initializing pyo to 48000'
     sound.init(48000, buffer=128)
     print 'Using %s(with %s) for sounds' % (sound.audioLib, sound.audioDriver)
+except:
+    print 'could not load pyo'
 
-
+# attempting import pygame
 try:
     import pygame
     from pygame.locals import *
 except ImportError:
     print "Warning: pygame not found; will be using pyglet for stim presentation"
-# pygame.mixer.pre_init(44100,-16,1, 4096) # pre-initialize to reduce the delay
-try:
-    from scipy import ndimage
-except ImportError:
-    pass
 
 
 def killDropbox():
