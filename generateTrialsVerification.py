@@ -29,16 +29,20 @@ stimuli = {
     'rockets  2  2  1  1': ['t', 211],
     'rockets  2  2  1  2': ['t', 212],
     'rockets  2  2  2  1': ['o', 222],
-    'rockets  2  2  2  2': ['o', 222]}
+    'rockets  2  2  2  2': ['o', 222]
+}
 
 stimuliOriginal = [stims for stims in stimuli.items() if stims[1][0] == 'o']
 stimuliTransfer = [stims for stims in stimuli.items() if stims[1][0] == 't']
-correctCategorys = [[stims, str(stims[1][1])[0]]
-                    for stims in stimuli.items() if stims[1][0] == 'o']
+correctCategorys = [[stims, str(stims[1][1])[0]] for stims in stimuli.items() if stims[1][0] == 'o']
 
 locations = ['left', 'right']
-mapping = {'G1': {'1': 'gek', '2': 'talp'}, 'G2': {'1': 'talp', '2': 'gek'}, 'A1': {
-    '1': 'Type A', '2': 'Type B'}, 'A2': {'1': 'Type B', '2': 'Type A'}}
+mapping = {
+    'G1': {'1': 'gek', '2': 'talp'}, 
+    'G2': {'1': 'talp', '2': 'gek'}, 
+    'A1': {'1': 'Type A', '2': 'Type B'}, 
+    'A2': {'1': 'Type B', '2': 'Type A'}
+}
 promptList = ['gek', 'talp']
 
 separator = ","
@@ -87,8 +91,9 @@ def generateTrialsVerification(subjCode, seed, mappingType, labelOrder):
             else:
                 correctResponse = '*'
             curTrial += 1
-            trials[curBlock].append(','.join(('train', str(curBlock + 1), trialType, curStim[0], curPrompt, correctCategory, correctResponse,
-                                              correctCategoryD1, correctCategoryD2, correctCategorySim)))
+            trials[curBlock].append(','.join(('train', str(curBlock + 1), 
+            trialType, curStim[0], curPrompt, correctCategory, correctResponse, correctCategoryD1, 
+            correctCategoryD2, correctCategorySim)))
 
     trialListFile.write(header + '\n')
     # shuffle within each block, but not between blocks

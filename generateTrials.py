@@ -54,6 +54,7 @@ stimuliCC = {
 
 
 locations = ['left', 'right']
+# Ex usage: correctCategory = mapping[mappingType][str(curStim[1][1])[0]]
 mapping = {
     'G1': {'1': 'gek', '2': 'talp'},
     'G2': {'1': 'talp', '2': 'gek'},
@@ -131,20 +132,22 @@ def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
                 correctResponse = 'right'
             else:
                 correctResponse = '*'
+            
             curTrial += 1
             if categoryStructure == "5-4":
                 correctCategoryD1 = mapping[mappingType][str(curStim[1][1])[0]]
                 correctCategoryD2 = mapping[mappingType][str(curStim[1][1])[1]]
-                correctCategorySim = mapping[mappingType][str(curStim[1][1])[
-                    2]]
-                trials[curBlock].append(','.join(('train', str(curBlock + 1), trialType, curStim[0], labelOrderMapping[curLabelOrder][0], labelOrderMapping[curLabelOrder][1], correctCategory, correctResponse,
+                correctCategorySim = mapping[mappingType][str(curStim[1][1])[2]]
+                trials[curBlock].append(','.join(('train', str(curBlock + 1), trialType, curStim[0], 
+                labelOrderMapping[curLabelOrder][0], labelOrderMapping[curLabelOrder][1], correctCategory, correctResponse,
                                                   correctCategoryD1, correctCategoryD2, correctCategorySim)))
             else:  # cc category structure
                 correctCategoryCC = mapping[mappingType][str(curStim[1][1])[0]]
                 correctCategoryR1 = mapping[mappingType][str(curStim[1][1])[1]]
                 correctCategoryR2 = mapping[mappingType][str(curStim[1][1])[2]]
                 correctCategoryKP = mapping[mappingType][str(curStim[1][1])[3]]
-                trials[curBlock].append(','.join(('train', str(curBlock + 1), trialType, curStim[0], labelOrderMapping[curLabelOrder][0], labelOrderMapping[curLabelOrder][1], correctCategory, correctResponse,
+                trials[curBlock].append(','.join(('train', str(curBlock + 1), trialType, curStim[0], 
+                labelOrderMapping[curLabelOrder][0], labelOrderMapping[curLabelOrder][1], correctCategory, correctResponse,
                                                   correctCategoryCC, correctCategoryR1, correctCategoryR2, correctCategoryKP)))
 
     trialListFile.write(header + '\n')
