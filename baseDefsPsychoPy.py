@@ -96,8 +96,13 @@ def enterSubjInfo(expName, optionList):
 
     def inputsOK(optionList, expInfo):
         for curOption in sorted(optionList.items()):
-            if curOption[1]['options'] != 'any' and expInfo[curOption[1]['name']] not in curOption[1]['options']:
-                return [False, "The option you entered for " + curOption[1]['name'] + " is not in the allowable list of options: " + str(curOption[1]['options'])]
+            name = curOption[1]['name']
+            options = curOption[1]['options']
+
+            if options != 'any' and expInfo[name] not in options:
+                return [False, "The option you entered for {name} is not in the allowable list of options: {options})"
+                .format(name=name, options=str(options))]
+        
         print "inputsOK passed"
         return [True, '']
 
@@ -113,8 +118,7 @@ def enterSubjInfo(expName, optionList):
         tips[curOption[1]['name']] = curOption[1]['prompt']
     expInfo['dateStr'] = data.getDateStr()
     expInfo['expName'] = expName
-    dlg = gui.DlgFromDict(expInfo, title=expName, fixed=['dateStr', 'expName'], order=[
-                          optionName[1]['name'] for optionName in sorted(optionList.items())], tip=tips)
+    dlg = gui.DlgFromDict(expInfo, title=expName, fixed=['dateStr', 'expName'], order=[optionName[1]['name'] for optionName in sorted(optionList.items())], tip=tips)
     if dlg.OK:
         misc.toFile(expName + '_lastParams.pickle', expInfo)
         [success, error] = inputsOK(optionList, expInfo)
@@ -134,8 +138,7 @@ def popupError(text):
 
 def setupSubjectVariables():
     parser = OptionParser()
-    parser.add_option("-s", "--subject-id", dest="subjid",
-                      help="specify the subject id")
+    parser.add_option("-s", "--subject-id", dest="subjid", help="specify the subject id")
 
     (options, args) = parser.parse_args()
     self.subjID = options.subjid
@@ -463,7 +466,7 @@ def pressedSomething(validKeys):
 
 
 def makeBorder(width=128, height=128, borderColor=-1, xborder=10, yborder=10):
-    # creates a bitmap with a border
+    """ creates a bitmap with a border"""
     borderColor = -1
     array = numpy.zeros([height, width])
     array[xborder:-xborder, yborder:-yborder] = 1
