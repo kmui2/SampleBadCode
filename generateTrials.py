@@ -71,17 +71,13 @@ separator = ","
 
 def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
     if categoryStructure == '5-4':
-        stimuliOriginal = [
-            stims for stims in stimuli.items() if stims[1][0] == 'o']
-        stimuliTransfer = [
-            stims for stims in stimuli.items() if stims[1][0] == 't']
+        stimuliOriginal = [stims for stims in stimuli.items() if stims[1][0] == 'o']
+        stimuliTransfer = [stims for stims in stimuli.items() if stims[1][0] == 't']
         correctCategorys = [[stims, str(stims[1][1])[0]]
                             for stims in stimuli.items() if stims[1][0] == 'o']
     else:
-        stimuliOriginal = [
-            stims for stims in stimuliCC.items() if stims[1][0] == 'o']
-        stimuliTransfer = [
-            stims for stims in stimuliCC.items() if stims[1][0] == 't']
+        stimuliOriginal = [stims for stims in stimuliCC.items() if stims[1][0] == 'o']
+        stimuliTransfer = [stims for stims in stimuliCC.items() if stims[1][0] == 't']
         correctCategorys = [[stims, str(stims[1][1])[0]]
                             for stims in stimuliCC.items() if stims[1][0] == 'o']
     try:
@@ -91,8 +87,7 @@ def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
         print "Couldn't open trial list file for writing for some reason. Weird."
         return False
     if labelOrder == 'R':
-        labelOrderMappingCircularList = circularList(
-            labelOrderMapping.keys(), seed + 1)
+        labelOrderMappingCircularList = circularList(labelOrderMapping.keys(), seed + 1)
     else:
         curLabelOrder = labelOrder
     totalBlocks = 35
