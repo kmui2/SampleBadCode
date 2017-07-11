@@ -1,6 +1,7 @@
 import random
 
 
+# Generator for randomizing list after each pass
 def circularList(lst, seed):
     if not isinstance(lst, list):
         lst = range(lst)
@@ -54,15 +55,15 @@ stimuliCC = {
 
 locations = ['left', 'right']
 mapping = {
-    'G1': {'1': 'gek', '2': 'talp'}, 
-    'G2': {'1': 'talp', '2': 'gek'}, 
-    'A1': {'1': 'Type A', '2': 'Type B'}, 
+    'G1': {'1': 'gek', '2': 'talp'},
+    'G2': {'1': 'talp', '2': 'gek'},
+    'A1': {'1': 'Type A', '2': 'Type B'},
     'A2': {'1': 'Type B', '2': 'Type A'}
 }
 labelOrderMapping = {
-    'GL': ['gek', 'talp'], 
-    'GR': ['talp', 'gek'], 
-    'AL': ['Type A', 'Type B'], 
+    'GL': ['gek', 'talp'],
+    'GR': ['talp', 'gek'],
+    'AL': ['Type A', 'Type B'],
     'AR': ['Type B', 'Type A']
 }
 
@@ -73,13 +74,11 @@ def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
     if categoryStructure == '5-4':
         stimuliOriginal = [stims for stims in stimuli.items() if stims[1][0] == 'o']
         stimuliTransfer = [stims for stims in stimuli.items() if stims[1][0] == 't']
-        correctCategorys = [[stims, str(stims[1][1])[0]]
-                            for stims in stimuli.items() if stims[1][0] == 'o']
+        correctCategorys = [[stims, str(stims[1][1])[0]] for stims in stimuli.items() if stims[1][0] == 'o']
     else:
         stimuliOriginal = [stims for stims in stimuliCC.items() if stims[1][0] == 'o']
         stimuliTransfer = [stims for stims in stimuliCC.items() if stims[1][0] == 't']
-        correctCategorys = [[stims, str(stims[1][1])[0]]
-                            for stims in stimuliCC.items() if stims[1][0] == 'o']
+        correctCategorys = [[stims, str(stims[1][1])[0]] for stims in stimuliCC.items() if stims[1][0] == 'o']
     try:
         # open trial list file for writing
         trialListFile = open(subjCode + '_trialList.csv', 'w')
@@ -87,7 +86,8 @@ def generateTrials(subjCode, seed, mappingType, labelOrder, categoryStructure):
         print "Couldn't open trial list file for writing for some reason. Weird."
         return False
     if labelOrder == 'R':
-        labelOrderMappingCircularList = circularList(labelOrderMapping.keys(), seed + 1)
+        labelOrderMappingCircularList = circularList(
+            labelOrderMapping.keys(), seed + 1)
     else:
         curLabelOrder = labelOrder
     totalBlocks = 35
