@@ -1,7 +1,16 @@
 #from pyglet.media import avbin
 import numpy
 
-from psychopy import prefs
+from psychopy import core, logging, event, visual, data, gui, misc, prefs, sound, core, visual
+import glob
+import os
+import random
+import sys
+import gc
+import time
+import hashlib
+import subprocess
+import math
 
 try:
     import winsound
@@ -13,7 +22,6 @@ try:
     prefs.general['audioLib'] = ['pyo']
 except:
     print 'could not load pyo'
-from psychopy import sound, core, visual
 
 
 if prefs.general['audioLib'][0] == 'pyo':
@@ -21,16 +29,6 @@ if prefs.general['audioLib'][0] == 'pyo':
     sound.init(48000, buffer=128)
     print 'Using %s(with %s) for sounds' % (sound.audioLib, sound.audioDriver)
 
-from psychopy import core, logging, event, visual, data, gui, misc
-import glob
-import os
-import random
-import sys
-import gc
-import time
-import hashlib
-import subprocess
-from math import *
 
 try:
     import pygame
@@ -56,13 +54,8 @@ def killDropbox():
 
 
 def startDropbox():
-    # try:
-    #	os.spawnl(os.P_DETACH,'c:/Users/Gary/AppData/Roaming/Dropbox/bin/Dropbox.exe') #this works but only for execs
     try:
-        # this works for links.  nice!
-        subprocess.Popen(
-            'start /B %USERPROFILE%/desktop/dropboxShortcut.lnk', shell=True)
-        # subprocess.Popen('start /B c:/Users/Gary/Documents/dropboxShortcut.lnk',shell=True) #this works for links.  nice!
+        subprocess.Popen('start /B %USERPROFILE%/desktop/dropboxShortcut.lnk', shell=True)
         print "Dropbox restarted"
     except:
         print "Could not re-start dropbox"
@@ -71,8 +64,7 @@ def startDropbox():
 def getHash(files):
     if not isinstance(files, list):
         files = [files]
-    hashes = [(fname, hashlib.md5(file(fname, 'r').read()).hexdigest())
-              for fname in files]
+    hashes = [(fname, hashlib.md5(file(fname, 'r').read()).hexdigest()) for fname in files]
     return hashes
 
 
