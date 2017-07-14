@@ -99,11 +99,12 @@ class Exp:
 
 
         # Instruction strings
-        self.instructionsEnding = open('instructionsEnding.txt', 'r').read().replace('\n', ' ')
-        self.instructionsGekTalp = open('instructionsGekTalp.txt', 'r').read().replace('\n', ' ') + '\n\n' + self.instructionsEnding
-        self.instructionsGekTalpHypothesis = open('instructionsGekTalpHypothesis.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
-        self.instructionsGekTalpVerify = open('instructionsGekTalpVerify.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
-        self.instructionsTypeAB = open('instructionsTypeAB.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
+        self.instructionsEnding = open('instructions_text/instructionsEnding.txt', 'r').read().replace('\n', ' ')
+        
+        self.instructionsGekTalp = open('instructions_text/instructionsGekTalp.txt', 'r').read().replace('\n', ' ') + '\n\n' + self.instructionsEnding
+        self.instructionsGekTalpHypothesis = open('instructions_text/instructionsGekTalpHypothesis.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
+        self.instructionsGekTalpVerify = open('instructions_text/instructionsGekTalpVerify.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
+        self.instructionsTypeAB = open('instructions_text/instructionsTypeAB.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
 
 
         self.instructionsGekTalp += responseInfo
