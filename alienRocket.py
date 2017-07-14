@@ -106,7 +106,6 @@ class Exp:
         self.instructionsGekTalpVerify = open('instructions_text/instructionsGekTalpVerify.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
         self.instructionsTypeAB = open('instructions_text/instructionsTypeAB.txt', 'r').read().replace('\n', ' ') + '\n\n' +  self.instructionsEnding
 
-
         self.instructionsGekTalp += responseInfo
         self.instructionsTypeAB += responseInfo
 
@@ -250,13 +249,21 @@ class ExpPresentation():
                 curTrialIndex += 1
 
 
+# Iniitialize new Experiment
 currentExp = Exp()
 currentPresentation = ExpPresentation(currentExp)
 currentPresentation.initializeExperiment()
+
+# Show instructions
 showText(currentExp.win, currentExp.instructions, color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
 showText(currentExp.win, currentExp.practiceTrials,color=(-1, -1, -1), inputDevice=currentExp.inputDevice)
+
+# Practice Round
 currentPresentation.cycleThroughExperimentTrials("practice")
 showText(currentExp.win, currentExp.realTrials, color=(0, 0, 0), inputDevice=currentExp.inputDevice)
+
+# Real Round
 currentPresentation.cycleThroughExperimentTrials("real")
 showText(currentExp.win, currentExp.finalText, color=(0, 0, 0),inputDevice=currentExp.inputDevice)  # thank the subject
+
 web.open(currentExp.surveyURL)
