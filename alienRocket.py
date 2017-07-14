@@ -133,51 +133,52 @@ class ExpPresentation():
 
     def initializeExperiment(self):
         """This loads all the stimili and initializes the trial sequence"""
-        self.fixSpot = visual.PatchStim(self.experiment.win, tex="none", mask="gauss", size=15, color='white')
+        # Add text to window
+        visual.PatchStim(self.experiment.win, tex="none", mask="gauss", size=15, color='white')
         (self.trialListMatrix, self.fieldNames) = importTrials(self.experiment.subjVariables["subjCode"] + '_trialList.csv', method="sequential")
 
-        self.centerRectOuter = newRect(self.experiment.win, size=(292, 292), pos=(0, 0), color=(0, 0, 0))
-        self.centerRectInner = newRect(self.experiment.win, size=(288, 288), pos=(0, 0), color=(1, 1, 1))
+        # Create new Rectangles in the window
+        newRect(self.experiment.win, size=(292, 292), pos=(0, 0), color=(0, 0, 0))
+        newRect(self.experiment.win, size=(288, 288), pos=(0, 0), color=(1, 1, 1))
 
         showText(self.experiment.win, "Loading Images...", color="gray", waitForKey=False)
 
         print 'SOUND PREFS: ', prefs.general['audioLib'], prefs.general['audioLib'][0], prefs.general['audioLib'][0] == "pygame"
 
-        if prefs.general['audioLib'] == ['pygame'] or prefs.general['audioLib'][0] == 'pygame':
+        # load the sound files
+        if  prefs.general['audioLib'][0] == 'pygame':
             print 'loading winsounds'
             self.soundMatrix = loadFiles('stimuli', ['wav'], 'winSound')
         else:
             self.soundMatrix = loadFiles('stimuli', ['wav'], 'sound')
-        
         #self.soundMatrix = loadFiles('stimuli','wav','pyo')
-        self.pictureMatrix = loadFiles(
-            'stimuli', ['gif', 'png'], 'image', self.experiment.win)
-        self.locations = {
-            'left': (-270, 0), 'right': (270, 0), 'center': (0, 0)}
+
+        self.pictureMatrix = loadFiles('stimuli', ['gif', 'png'], 'image', self.experiment.win)
+        self.locations = {'left': (-270, 0), 'right': (270, 0), 'center': (0, 0)}
 
     def presentExperimentTrial(self, trialIndex, whichPart, curTrial):
-        if self.experiment.subjVariables['locationMapping'] == 'V':
-            prompt = newText(self.experiment.win, text="Is this rocket a " + curTrial['labelPrompt'] + '?', color="black", scale=1.5, pos=[0, 400])
-            labelReversalMap = {'gek': 'talp', 'talp': 'gek'}
-            sideToLabelMap = {'Yes': curTrial['labelPrompt'], 'No': labelReversalMap[curTrial['labelPrompt']]}
-        else:
-            labelLeft = newText(self.experiment.win, text=curTrial['labelLeft'], pos=self.locations['left'], color="black", scale=2.0)
-            labelRight = newText(self.experiment.win, text=curTrial['labelRight'], pos=self.locations['right'], color="black", scale=2.0)
-            sideToLabelMap = {'left': curTrial['labelLeft'], 'right': curTrial['labelRight']}
         
-        yes = newText(self.experiment.win, text='Yes',pos=self.locations['left'], color="black", scale=1.0)
-        no = newText(self.experiment.win, text='No',pos=self.locations['right'], color="black", scale=1.0)
+        yesText = newText(self.experiment.win, text='Yes',pos=self.locations['left'], color="black", scale=1.0)
+        noText = newText(self.experiment.win, text='No',pos=self.locations['right'], color="black", scale=1.0)
 
+    
         self.experiment.win.flip()
         core.wait(self.experiment.ITI)
         self.pictureMatrix[curTrial['stim']][0].setPos([0, 0])
         setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0]], self.experiment.preLabelDelay)
 
         if self.experiment.subjVariables['locationMapping'] == 'V':
-            setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0], prompt, yes, no])
+            prompt = newText(self.experiment.win, text="Is this rocket a " + curTrial['labelPrompt'] + '?', color="black", scale=1.5, pos=[0, 400])
+            labelReversalMap = {'gek': 'talp', 'talp': 'gek'}
+            sideToLabelMap = {'Yes': curTrial['labelPrompt'], 'No': labelReversalMap[curTrial['labelPrompt']]}
+            setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0], prompt, yesText, noText])
         else:
+            labelLeft = newText(self.experiment.win, text=curTrial['labelLeft'], pos=self.locations['left'], color="black", scale=2.0)
+            labelRight = newText(self.experiment.win, text=curTrial['labelRight'], pos=self.locations['right'], color="black", scale=2.0)
+            sideToLabelMap = {'left': curTrial['labelLeft'], 'right': curTrial['labelRight']}
             setAndPresentStimulus(self.experiment.win, [self.pictureMatrix[curTrial['stim']][0], labelLeft, labelRight])
-
+        
+        # Set keyboard or gamepad response
         if self.experiment.inputDevice == 'keyboard':
             (resp, rt) = getKeyboardResponse(self.experiment.validResponses.keys())
         
@@ -185,9 +186,8 @@ class ExpPresentation():
             (resp, rt) = getGamepadResponse(self.experiment.stick, self.experiment.validResponses.keys())
         resp = self.experiment.validResponses[resp]
 
-        if curTrial['trialType'] == "transfer":
-            isRight = '*'
-        else:
+        isRight = '*'
+        if curTrial['trialType'] != "transfer":
             isRight = int(resp == curTrial['correctResp'])
             if isRight:
                 playAndWait(self.soundMatrix['bleep'])
