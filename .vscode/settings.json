@@ -8,6 +8,10 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/._*.py": true,
-        "**/*.pyc": true,
-    }
+        "**/*.pyc": true
+    },
+    "python.linting.pylintArgs": [
+        "--errors-only"
+    ],
+    "python.linting.enabled": false
 }

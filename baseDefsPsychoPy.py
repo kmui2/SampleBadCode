@@ -79,8 +79,7 @@ def circularList(lst, seed):
 
 def getRunTimeVars(varsToGet, order, expVersion):
     """Get run time variables, see http://www.psychopy.org/api/gui.html for explanation"""
-    infoDlg = gui.DlgFromDict(dictionary=varsToGet, title=expVersion, fixed=[
-                              expVersion], order=order)
+    infoDlg = gui.DlgFromDict(dictionary=varsToGet, title=expVersion, fixed=[expVersion], order=order)
     order.append('dateStr')
     order.append('expVersion')
     varsToGet['dateStr'] = data.getDateStr()

@@ -55,6 +55,7 @@ def generateTrialsVerification(subjCode, seed, mappingType, labelOrder):
     except IOError:
         print "Couldn't open trial list file for writing for some reason. Weird."
         return False
+
     promptListCircularList = circularList(promptList, seed + 1)
     totalBlocks = 35
     generalizationBlocks = [4, 17, 34]
@@ -84,6 +85,7 @@ def generateTrialsVerification(subjCode, seed, mappingType, labelOrder):
             correctCategoryD1 = mapping[mappingType][str(curStim[1][1])[0]]
             correctCategoryD2 = mapping[mappingType][str(curStim[1][1])[1]]
             correctCategorySim = mapping[mappingType][str(curStim[1][1])[2]]
+            
             if correctCategory == curPrompt:
                 correctResponse = 'Yes'
             elif correctCategory != '*' and (correctCategory != curPrompt):
