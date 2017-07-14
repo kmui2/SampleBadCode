@@ -1,0 +1,11 @@
+In this task you will see schematic pictures of various rockets.  There are
+two types of rockets - gek rockets, and talp rockets. Your goal is to figure
+out which ones are which. On each trial of this experiment you will see a picture
+of one of the rockets and a prompt 'Is this a gek rocket' or 'Is this a talp
+rocket'. You should respond 'Yes' or 'No' depending on what you think the
+answer is. Press the left key to respond 'Yes' and the right key to respond
+'No'. The experimenter will let you know which specific buttons to use. After
+you make a choice you will hear a buzzing sound if you made a mistake, and a
+bleeping sound if you responded correctly. In the beginning you will just be
+guessing, but you'll soon find yourself improving. **Note that on some trials
+there won't be any feedback (buzz or bleep) sounds. This is normal.**

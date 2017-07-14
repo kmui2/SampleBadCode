@@ -1,0 +1,10 @@
+In this task you will see schematic pictures of various rockets.  There are
+two types of rockets - gek rockets, and talp rockets. Your goal is to figure out
+which ones are which. On each trial of this experiment you will see a picture of
+one of the rockets and then the two options (Type A and Type B) will appear to
+the left and right of the picture. You should respond with the appropriate (left or right)
+key to choose the kind of rocket you think it is (Type A or Type B). After you make a
+choice you will hear a buzzing sound if you made a mistake, and a bleeping sound if
+you responded correctly. In the beginning you will just be guessing, but you'll soon
+find yourself improving. *Note that on some trials there won't be any feedback
+(buzz or bleep) sounds. This is normal.*
