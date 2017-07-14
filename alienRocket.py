@@ -161,7 +161,6 @@ class ExpPresentation():
         yesText = newText(self.experiment.win, text='Yes',pos=self.locations['left'], color="black", scale=1.0)
         noText = newText(self.experiment.win, text='No',pos=self.locations['right'], color="black", scale=1.0)
 
-    
         self.experiment.win.flip()
         core.wait(self.experiment.ITI)
         self.pictureMatrix[curTrial['stim']][0].setPos([0, 0])
